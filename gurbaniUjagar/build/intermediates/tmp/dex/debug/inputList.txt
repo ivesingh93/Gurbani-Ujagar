@@ -1,0 +1,7 @@
+/Users/Waheguru/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/build/intermediates/classes/debug
+/Users/Waheguru/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/build/intermediates/pre-dexed/debug/library-1.2.1-ef524f0851b9eabbd423c1945ae964523b565a3b.jar
+/Users/Waheguru/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/build/intermediates/pre-dexed/debug/classes-4726f38cb860e2904fcd19f013984b1a2bdead93.jar
+/Users/Waheguru/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/build/intermediates/pre-dexed/debug/nineoldandroids-2.4.0-88f992b7e76a45662ac78013e79ebb4348011fc4.jar
+/Users/Waheguru/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/build/intermediates/pre-dexed/debug/icshqtcqgrphsd-6b9af9a53638b59684d916e4a408a26979c34e31.jar
+/Users/Waheguru/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/build/intermediates/pre-dexed/debug/GoogleAdMobAdsSdk-6.4.1-77fc69dbda48830830e5c759d2b7f740e53a258b.jar
+/Users/Waheguru/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/build/intermediates/pre-dexed/debug/support-v4-18.0.0-7e16faf78dfdd87607c9bfba343e60dd1a0fe9f4.jar
