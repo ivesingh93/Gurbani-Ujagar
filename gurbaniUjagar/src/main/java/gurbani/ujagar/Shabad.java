@@ -44,7 +44,7 @@ public class Shabad extends ListActivity {
         public MyCustomAdapter(Context context, int textViewResourceId, ArrayList<String> arr) {
 
             super(context, textViewResourceId, arr);
-            font = Typeface.createFromAsset(getAssets(), "fonts/GURAKHAR.TTF");
+            font = Typeface.createFromAsset(getAssets(), "fonts/gurbaniwebthick.ttf");
         }
 
         @Override

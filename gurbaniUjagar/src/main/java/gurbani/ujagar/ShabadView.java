@@ -197,6 +197,7 @@ public class ShabadView extends SlidingFragmentActivity {
                     mLine = reader.readLine();
                 }
             } catch (IOException e) {
+
             }
 
 

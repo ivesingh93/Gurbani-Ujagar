@@ -94,7 +94,7 @@ public class ShabadActivity extends SlidingFragmentActivity {
 		keyword = (TextView) findViewById(R.id.keyword);
 		arr = new ArrayList<String>();
 
-		Typeface face = Typeface.createFromAsset(getAssets(),"fonts/GURAKHAR.TTF");
+		Typeface face = Typeface.createFromAsset(getAssets(),"fonts/gurbaniwebthick.ttf");
 		shabad.setTypeface(face);
 		text_shabad.setTypeface(face);
 		keyword.setTypeface(face);
