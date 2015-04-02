@@ -263,12 +263,13 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int cubeout=0x7f080008;
         public static final int editTextMessage=0x7f08001f;
         public static final int editTextSubject=0x7f08001d;
-        public static final int exit=0x7f080063;
+        public static final int exit=0x7f080065;
         public static final int facebook=0x7f080022;
         public static final int fliphorizontal=0x7f080009;
         public static final int flipvertical=0x7f08000a;
         public static final int fullscreen=0x7f080004;
         public static final int general_menu=0x7f08002c;
+        public static final int html=0x7f080062;
         public static final int imageButton1=0x7f080014;
         public static final int imageView1=0x7f080023;
         public static final int jazzy_key=0x7f080000;
@@ -295,15 +296,16 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int right=0x7f080003;
         public static final int rotatedown=0x7f08000b;
         public static final int rotateup=0x7f08000c;
-        public static final int rowTextView=0x7f080061;
+        public static final int rowTextView=0x7f080063;
         public static final int save=0x7f080024;
         public static final int scringoWelcome1=0x7f080028;
         public static final int scringoWelcome2=0x7f080029;
+        public static final int scroll=0x7f080061;
         public static final int search=0x7f08005b;
         public static final int selected_view=0x7f080001;
         public static final int shabad=0x7f080059;
         public static final int share=0x7f080025;
-        public static final int slidingmenumain=0x7f080062;
+        public static final int slidingmenumain=0x7f080064;
         public static final int stack=0x7f08000d;
         public static final int standard=0x7f08000e;
         public static final int tablet=0x7f08000f;
@@ -333,8 +335,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int same_pager=0x7f03000c;
         public static final int settings=0x7f03000d;
         public static final int shabad_activity=0x7f03000e;
-        public static final int simplerow=0x7f03000f;
-        public static final int slidingmenumain=0x7f030010;
+        public static final int shabad_view=0x7f03000f;
+        public static final int simplerow=0x7f030010;
+        public static final int slidingmenumain=0x7f030011;
     }
     public static final class menu {
         public static final int menu=0x7f0b0000;

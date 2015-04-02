@@ -3,7 +3,7 @@
     package="gurbani.ujagar"
     android:hardwareAccelerated="true"
     android:installLocation="preferExternal"
-    android:versionCode="40"
+    android:versionCode="41"
     android:versionName="9.0" >
 
     <uses-sdk
@@ -131,10 +131,6 @@
         </activity>
          <activity
             android:name="gurbani.ujagar.SantSingh"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="gurbani.ujagar.ShabadView"
             android:screenOrientation="portrait" >
         </activity>
     </application>
