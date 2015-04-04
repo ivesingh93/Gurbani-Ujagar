@@ -1,10 +1,5 @@
 package gurbani.ujagar;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.EmptyStackException;
-
 import android.annotation.SuppressLint;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -40,6 +35,11 @@ import android.widget.Toast;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.EmptyStackException;
+
 public class ChaupaiSahib extends SlidingFragmentActivity {
 	SectionsPagerAdapter mSectionsPagerAdapter;
 	static ViewPager mViewPager;
@@ -58,7 +58,7 @@ public class ChaupaiSahib extends SlidingFragmentActivity {
 
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_main);
-		getSlidingMenu().setBehindOffset(400);
+		getSlidingMenu().setBehindOffset(150);
 		getSlidingMenu().setMode(SlidingMenu.LEFT_RIGHT);
 		getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 		setBehindContentView(R.layout.menu);

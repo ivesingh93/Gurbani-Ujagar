@@ -67,7 +67,7 @@ public class ManmohanSingh extends SlidingFragmentActivity {
 
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.same_pager);
-		getSlidingMenu().setBehindOffset(400);
+		getSlidingMenu().setBehindOffset(150);
 		getSlidingMenu().setMode(SlidingMenu.LEFT_RIGHT);
 		getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 		setBehindContentView(R.layout.menu);

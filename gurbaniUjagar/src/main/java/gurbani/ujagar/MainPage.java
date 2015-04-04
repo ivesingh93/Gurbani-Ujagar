@@ -1,8 +1,11 @@
 package gurbani.ujagar;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -11,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingActivity;
@@ -37,8 +39,12 @@ public class MainPage extends SlidingActivity {
 
 		image1 = (ImageView) findViewById(R.id.scringoWelcome1);
 		image2 = (ImageView) findViewById(R.id.scringoWelcome2);
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
 
-		getSlidingMenu().setBehindOffset(400);
+		getSlidingMenu().setBehindOffset(150);
 		getSlidingMenu().setMode(SlidingMenu.LEFT_RIGHT);
 		getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 		setBehindContentView(R.layout.menu);
