@@ -2,13 +2,16 @@ package gurbani.ujagar;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
+import com.jeremyfeinstein.slidingmenu.lib.app.SlidingActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,7 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class ShabadActivity extends SlidingFragmentActivity {
+public class ShabadActivity extends SlidingActivity {
 	static ArrayList<String> arr;
 	static int i;
 	static char[] search_word_arr;
@@ -38,6 +41,9 @@ public class ShabadActivity extends SlidingFragmentActivity {
 	static Map<String, Integer> list_array = new TreeMap<String, Integer>();
     static Map<String, Integer> line_num_arr = new HashMap<String, Integer>();
     static int line_num = 0;
+	SharedPreferences sp;
+	SharedPreferences.Editor spe;
+
 	public void onBackPressed() {
 		try{
 			Class ourClass = Class.forName("gurbani.ujagar.MainPage");
@@ -53,48 +59,44 @@ public class ShabadActivity extends SlidingFragmentActivity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
+		slide_menu();
 
 		//this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.shabad_activity);
-		getSlidingMenu().setBehindOffset(150);
-		getSlidingMenu().setMode(SlidingMenu.LEFT_RIGHT);
-		getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-		setBehindContentView(R.layout.menu);
-		getSlidingMenu().setSecondaryMenu(R.layout.menu2);
-
-		final ListView sggs = (ListView)findViewById(R.id.listView1);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.simplerow, ConstantsMethods.SGGS);
-		sggs.setAdapter(adapter);
-		final ConstantsMethods constant = new ConstantsMethods();
-
-		sggs.setOnItemClickListener(new OnItemClickListener() {
-
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-				constant.sggsMethod(parent, view, position, id, ShabadActivity.this);
-			}
-		}); 
+		sp = PreferenceManager.getDefaultSharedPreferences(this);
+		spe = sp.edit();
 
-		ListView general = (ListView)findViewById(R.id.general_menu);
-		ArrayAdapter<String> adapter2 = new GeneralArrayAdapter(this, R.layout.simplerow, ConstantsMethods.GENERAL);
-		general.setAdapter(adapter2);
-
-		general.setOnItemClickListener(new OnItemClickListener() {
-
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				toggle();
-				constant.generalMethod(parent, view, position, id, ShabadActivity.this);
-
-
-			}
-		}); 
 		shabad = (EditText) findViewById(R.id.shabad);
 		text_shabad = (TextView) findViewById(R.id.text_shabad);
 		keyword = (TextView) findViewById(R.id.keyword);
 		arr = new ArrayList<String>();
 
-		Typeface face = Typeface.createFromAsset(getAssets(),"fonts/gurbaniwebthick.ttf");
+		arr.clear();
+		int size = sp.getInt("arr_size", 0);
+
+		for(int i=0;i<size;i++) {
+			arr.add(sp.getString("arr" + i, null));
+		}
+
+		shabad.setText(sp.getString("shabad", ""));
+		shabad.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				sp.edit().putString("shabad", s.toString()).commit();
+			}
+		});
+
+		Typeface face = Typeface.createFromAsset(getAssets(),"fonts/anmollipinumbers.ttf");
 		shabad.setTypeface(face);
 		text_shabad.setTypeface(face);
 		keyword.setTypeface(face);
@@ -188,15 +190,15 @@ public class ShabadActivity extends SlidingFragmentActivity {
 
 			@Override
 			public void onClick(View v) {
-				if(shabad.getText().toString().matches("")){
+				if (shabad.getText().toString().matches("")) {
 					Toast.makeText(getApplicationContext(), "Textfield cannot be empty.", Toast.LENGTH_SHORT).show();
-				}else{
+				} else {
 					perform_search();
 				}
 			}
 		});
 
-		ImageButton back_space = (ImageButton)findViewById(R.id.back_space);
+		Button back_space = (Button)findViewById(R.id.back);
 		back_space.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -208,7 +210,18 @@ public class ShabadActivity extends SlidingFragmentActivity {
 			}
 		});
 
+		Button clear = (Button)findViewById(R.id.clear);
+		clear.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				shabad.setText("");
+			}
+		});
+
+
 	}
+
 	public void onClick(View v){
 		switch(v.getId()){
 		case R.id.Button07: shabad.setText(shabad.getText()+"a"); break;
@@ -261,12 +274,13 @@ public class ShabadActivity extends SlidingFragmentActivity {
 		search_word_arr = shabad.getText().toString().toCharArray();
 		for (int i = 1; i <=1430; i++){   
 			try {
-				BufferedReader reader2 = new BufferedReader(new InputStreamReader(getAssets().open("gurmukhi/"+i)));
+				BufferedReader reader2 = new BufferedReader(new InputStreamReader(getAssets().open("guru_granth/gurmukhi/" +i)));
 				String mLine = reader2.readLine(), mLine2;
 
 				while (mLine != null) {
                     line_num++;
 					mLine2 = mLine;
+
 					mLine = mLine.replace(" i", " ");
 					if (mLine.charAt(0) == 'i'){
 						mLine = mLine.substring(1,mLine.length());
@@ -318,9 +332,18 @@ public class ShabadActivity extends SlidingFragmentActivity {
 
 			} 
 		}
+
+		spe.putInt("arr_size", arr.size());
+
+		for(int i=0; i<arr.size(); i++) {
+			spe.remove("arr" + i);
+			spe.putString("arr" + i, arr.get(i));
+		}
+
 		if(arr.size() !=0){
 
 			Toast.makeText(getApplicationContext(), arr.size()+" Result(s)", Toast.LENGTH_LONG).show();
+
 			try{
 				Class ourClass = Class.forName("gurbani.ujagar.Shabad");
 				Intent ourIntent = new Intent(ShabadActivity.this, ourClass);
@@ -334,6 +357,36 @@ public class ShabadActivity extends SlidingFragmentActivity {
 		}else{
 			Toast.makeText(getApplicationContext(), "Sorry, no results.", Toast.LENGTH_LONG).show();
 		}
+	}
+
+	public void slide_menu() {
+		getSlidingMenu().setBehindOffset(150);
+		getSlidingMenu().setMode(SlidingMenu.LEFT_RIGHT);
+		getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+		setBehindContentView(R.layout.menu);
+		getSlidingMenu().setSecondaryMenu(R.layout.menu2);
+
+		final ListView sggs = (ListView) findViewById(R.id.listView1);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.simplerow, ConstantsMethods.SGGS);
+		sggs.setAdapter(adapter);
+		final ConstantsMethods constant = new ConstantsMethods();
+
+		sggs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				constant.sggsMethod(parent, view, position, id, ShabadActivity.this);
+			}
+		});
+
+		ListView general = (ListView) findViewById(R.id.general_menu);
+		ArrayAdapter<String> adapter2 = new GeneralArrayAdapter(this, R.layout.simplerow, ConstantsMethods.GENERAL);
+		general.setAdapter(adapter2);
+
+		general.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				toggle();
+				constant.generalMethod(parent, view, position, id, ShabadActivity.this);
+			}
+		});
 	}
 }
 

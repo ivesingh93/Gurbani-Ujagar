@@ -35,8 +35,8 @@ public class RaagIndex extends ExpandableListActivity{
 
 		// this is not really  necessary as ExpandableListActivity contains an ExpandableList
 		//setContentView(R.layout.main);
-		
-		
+
+
 		expandableList = getExpandableListView(); // you can use (ExpandableListView) findViewById(R.id.list)
 		
 		expandableList.setDividerHeight(2);
@@ -68,7 +68,7 @@ public class RaagIndex extends ExpandableListActivity{
 	
 	
 	public void setGroupParents() {
-		parentItems.add("Japji Sahib");
+		parentItems.add("japjisahib");
 		parentItems.add("Rehraas Sahib");
 		parentItems.add("Sohila Sahib");
 		parentItems.add("Siri Raag");
@@ -107,9 +107,9 @@ public class RaagIndex extends ExpandableListActivity{
 
 	public void setChildData() {
 		
-		// Japji Sahib
+		// japjisahib
 		ArrayList<String> child = new ArrayList<String>();
-		child.add("Ang 1 - Japji Sahib");
+		child.add("Ang 1 - japjisahib");
 		childItems.add(child);
 		
 		// Rehraas Sahib
@@ -672,62 +672,34 @@ class RaagExpandableAdapter extends BaseExpandableListAdapter {
 
 				String text = child.get(childPosition);
 				raagNum = Integer.parseInt(text.replaceAll("\\D", ""));
-                CharSequence colors[] = new CharSequence[] {"Gurbani Only","English Translation","Punjabi Translation", "Punjabi Teeka"};
+
+				CharSequence options[] = new CharSequence[]{"Gurbani Only", "Punjabi Teeka", "Punjabi Translation", "English Translation"};
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-				builder.setTitle("Open Ang "+raagNum+" with: ");
-				builder.setItems(colors, new DialogInterface.OnClickListener() {
+				builder.setTitle("Open Ang " + raagNum + " with: ");
+				builder.setItems(options, new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						// English Translation
-                        if(which == 0){
-                            try {
-                                Class ourClass = Class.forName("gurbani.ujagar.GurbaniOnly");
-                                Intent i = new Intent(activity,ourClass);
-                                i.putExtra("Position", raagNum);
-                                activity.startActivity(i);
 
-                            } catch (ClassNotFoundException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
-                        }else if (which == 1){
-                            try {
-                                Class ourClass = Class.forName("gurbani.ujagar.SantSingh");
-                                Intent i = new Intent(activity,ourClass);
-                                i.putExtra("Position", raagNum);
-                                activity.startActivity(i);
+						if(which >= 0 && which <= 3){
+							ConstantsMethods.bani = "guru_granth";
+							ConstantsMethods.ang = 1430;
+							ConstantsMethods.bani_name = "Ang";
+							ConstantsMethods.pos = which;
 
-                            } catch (ClassNotFoundException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
-                        }else if (which == 2){
-                            try {
-                                Class ourClass = Class.forName("gurbani.ujagar.ManmohanSingh");
-                                Intent i = new Intent(activity,ourClass);
-                                i.putExtra("Position", raagNum);
-                                activity.startActivity(i);
+							try {
+								Class ourClass = Class.forName("gurbani.ujagar.Gurbani");
+								Intent i = new Intent(activity, ourClass);
+								activity.startActivity(i);
 
-                            } catch (ClassNotFoundException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
-                        }else if (which == 3){
-                            try {
-                                Class ourClass = Class.forName("gurbani.ujagar.SahibSingh");
-                                Intent i = new Intent(activity,ourClass);
-                                i.putExtra("Position", raagNum);
-                                activity.startActivity(i);
-
-                            } catch (ClassNotFoundException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
-                        }
+							} catch (ClassNotFoundException e) {
+								e.printStackTrace();
+							}
+						}
 					}
 				});
 				builder.show();
+
 
 
 

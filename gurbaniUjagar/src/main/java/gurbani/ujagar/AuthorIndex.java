@@ -26,7 +26,7 @@ public class AuthorIndex extends ExpandableListActivity{
 	private ArrayList<Object> childItems = new ArrayList<Object>();
 	ExpandableListView expandableList;
 	private int lastExpandedPosition = -1;
-	Context context;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -599,56 +599,26 @@ class AuthorExpandableAdapter extends BaseExpandableListAdapter {
 
 				String text = child.get(childPosition);
 				authorNum = Integer.parseInt(text.replaceAll("\\D", ""));
-				CharSequence colors[] = new CharSequence[] {"Gurbani Only","English Translation","Punjabi Translation", "Punjabi Teeka"};
+				CharSequence options[] = new CharSequence[]{"Gurbani Only", "Punjabi Teeka", "Punjabi Translation", "English Translation"};
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-				builder.setTitle("Open Ang "+authorNum+" with: ");
-				builder.setItems(colors, new DialogInterface.OnClickListener() {
+				builder.setTitle("Open Ang " + authorNum + " with: ");
+				builder.setItems(options, new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						// English Translation
-                        if(which == 0){
-                            try {
-                                Class ourClass = Class.forName("gurbani.ujagar.GurbaniOnly");
-                                Intent i = new Intent(activity,ourClass);
-                                i.putExtra("Position", authorNum);
-                                activity.startActivity(i);
 
-                            } catch (ClassNotFoundException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
-                        }else if (which == 1){
+						if(which >= 0 && which <= 3){
+							ConstantsMethods.bani = "guru_granth";
+							ConstantsMethods.ang = 1430;
+							ConstantsMethods.bani_name = "Ang";
+							ConstantsMethods.pos = which;
+
 							try {
-								Class ourClass = Class.forName("gurbani.ujagar.SantSingh");
-								Intent i = new Intent(activity,ourClass);
-								i.putExtra("Position", authorNum);
+								Class ourClass = Class.forName("gurbani.ujagar.Gurbani");
+								Intent i = new Intent(activity, ourClass);
 								activity.startActivity(i);
 
 							} catch (ClassNotFoundException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}else if (which == 2){
-							try {
-								Class ourClass = Class.forName("gurbani.ujagar.ManmohanSingh");
-								Intent i = new Intent(activity,ourClass);
-								i.putExtra("Position", authorNum);
-								activity.startActivity(i);
-
-							} catch (ClassNotFoundException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}else if (which == 3){
-							try {
-								Class ourClass = Class.forName("gurbani.ujagar.SahibSingh");
-								Intent i = new Intent(activity,ourClass);
-								i.putExtra("Position", authorNum);
-								activity.startActivity(i);
-
-							} catch (ClassNotFoundException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}

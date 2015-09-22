@@ -32,20 +32,14 @@ public class GeneralArrayAdapter extends ArrayAdapter<String>  {
 		textView.setText(values[position]);
 		textView.setTextColor(Color.WHITE);
 		String s = values[position];
-		if (s.equals("Settings")) {
-			logo.setImageResource(R.drawable.settings);
-		}else if (s.equals("Apps By IveSingh")) {
+		if (s.equals("Apps By IveSingh")) {
 			logo.setImageResource(R.drawable.android);
 		}else if (s.equals("Rate This App")){
 			logo.setImageResource(R.drawable.rate);
 		}else if (s.equals("Follow on Facebook")) {
 			logo.setImageResource(R.drawable.facebook);
-		}else if (s.equals("Top Apps")) {
-			logo.setImageResource(R.drawable.top_app);
 		}else if(s.equals("Daily Inspiration")){
 			logo.setImageResource(R.drawable.inspiration);
-		}else if(s.equals("Gurbani Kosh")){
-			logo.setImageResource(R.drawable.new_icon);
 		}else if(s.equals("Feedback")){
 			logo.setImageResource(R.drawable.feedback);
 		}

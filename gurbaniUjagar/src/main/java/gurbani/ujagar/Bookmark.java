@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -20,32 +21,22 @@ import com.jeremyfeinstein.slidingmenu.lib.app.SlidingListActivity;
 
 import java.util.ArrayList;
 
-public class Shabad extends SlidingListActivity {
+/**
+ * Created by Waheguru on 6/7/15.
+ */
+public class Bookmark extends SlidingListActivity {
+    ArrayList<String> bookmark_arr = new ArrayList<String>();
+    ArrayList<String> bookmark_arr_date = new ArrayList<String>();
+    ArrayList<String> bookmark_arr_ang = new ArrayList<String>();
+    String[] arr = {"January" , "February" , "March" , "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+
+    DatabaseHelper bookmarkDB;
     static public int shabad = 0;
     static String keyword;
-    static String line_search = "";
-    private final String SHABAD_LIST = "shabad_list", SHABAD_ARR = "shabad_arr",
-            SHABAD_ANG = "shabad_ang";
-    private ArrayList<String> shabad_arr = new ArrayList<String>();
-    private ArrayList<Integer> shabad_ang = new ArrayList<Integer>();
-
-    @Override
-    public void onBackPressed() {
-        try {
-            Class ourClass = Class.forName("gurbani.ujagar.ShabadActivity");
-            Intent ourIntent = new Intent(Shabad.this, ourClass);
-            startActivity(ourIntent);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        ShabadActivity.arr.clear();
-        finish();
-    }
-
+    Cursor res;
+    private TextView text, date, ang;
     public class MyCustomAdapter extends ArrayAdapter<String> {
         private Typeface font;
-        private TextView tt;
-
         public MyCustomAdapter(Context context, int textViewResourceId, ArrayList<String> arr) {
 
             super(context, textViewResourceId, arr);
@@ -57,13 +48,23 @@ public class Shabad extends SlidingListActivity {
             View v = convertView;
             if (v == null) {
                 LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                v = vi.inflate(R.layout.mylist, null);
-            }
-            tt = (TextView) v.findViewById(R.id.text);
-            tt.setTypeface(font);
-            tt.setTextSize(24);
-            tt.setText("" + ShabadActivity.arr.get(position));
+                v = vi.inflate(R.layout.custom_view, null);
 
+            }
+            text = (TextView) v.findViewById(R.id.text);
+            date = (TextView) v.findViewById(R.id.date);
+            ang = (TextView) v.findViewById(R.id.ang);
+
+            text.setTypeface(font);
+            text.setTextSize(24);
+            text.setText(bookmark_arr.get(position));
+
+            date.setTextSize(16);
+            date.setText(bookmark_arr_date.get(position));
+
+            ang.setTypeface(font);
+            ang.setTextSize(16);
+            ang.setText(bookmark_arr_ang.get(position));
             return v;
         }
     }
@@ -76,15 +77,22 @@ public class Shabad extends SlidingListActivity {
         super.onCreate(savedInstanceState);
 
         slide_menu();
-        if(savedInstanceState != null){
-            ShabadActivity.arr = savedInstanceState.getStringArrayList(SHABAD_LIST);
-            shabad_arr = savedInstanceState.getStringArrayList(SHABAD_ARR);
-            shabad_ang = savedInstanceState.getIntegerArrayList(SHABAD_ANG);
 
+        bookmarkDB = new DatabaseHelper(Bookmark.this);
+        res = bookmarkDB.getAllData();
+
+        while(res.moveToNext()){
+            bookmark_arr.add(res.getString(1));
+            String date[] = res.getString(3).split("-");
+            month(date[1]);
+            bookmark_arr_date.add(date[2] + " " + month(date[1]) + ", " + date[0]);
+            bookmark_arr_ang.add("AMg " +res.getString(2));
         }
-        setListAdapter(new MyCustomAdapter(Shabad.this, R.layout.mylist, ShabadActivity.arr));
+
+        setListAdapter(new MyCustomAdapter(Bookmark.this, R.layout.custom_view, bookmark_arr));
         final ListView list = getListView();
         list.setBackgroundColor(Color.rgb(85, 129, 136));
+
     }
 
     protected void onListItemClick(ListView l, View v, int position, long id) {
@@ -92,23 +100,20 @@ public class Shabad extends SlidingListActivity {
         super.onListItemClick(l, v, position, id);
         Object o = this.getListAdapter().getItem(position);
         keyword = o.toString();
-
-        for(String line: ShabadActivity.list_array.keySet()){
-            shabad_arr.add(line);
-            shabad_ang.add(ShabadActivity.list_array.get(line));
-        }
-
-        for(int i = 0; i < shabad_arr.size(); i++){
-            if(shabad_arr.get(i).equals(keyword)){
-                shabad = shabad_ang.get(i);
+        res = bookmarkDB.getAllData();
+        while(res.moveToNext()){
+            if (keyword.equals(res.getString(1).toString())){
+                shabad = Integer.parseInt(res.getString(2).toString());
+                if(!res.getString(1).toString().contains("AMg")) {
+                    Shabad.line_search = res.getString(1).toString();
+                    //Log.w("App", res.getString(1).toString());
+                }
             }
         }
 
-        line_search = keyword;
-
         CharSequence options[] = new CharSequence[]{"Gurbani Only", "Punjabi Teeka", "Punjabi Translation", "English Translation"};
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(Shabad.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(Bookmark.this);
         builder.setTitle("Open Ang " + shabad + " with: ");
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
@@ -122,7 +127,7 @@ public class Shabad extends SlidingListActivity {
 
                     try {
                         Class ourClass = Class.forName("gurbani.ujagar.Gurbani");
-                        Intent i = new Intent(Shabad.this, ourClass);
+                        Intent i = new Intent(Bookmark.this, ourClass);
                         startActivity(i);
 
                     } catch (ClassNotFoundException e) {
@@ -132,7 +137,41 @@ public class Shabad extends SlidingListActivity {
             }
         });
         builder.show();
+    }
 
+    public String month(String month){
+        if (month.equals("01")){
+            return arr[0];
+        }else if (month.equals("02")){
+            return arr[1];
+        }else if (month.equals("03")){
+            return arr[2];
+        }else if (month.equals("04")){
+            return arr[3];
+        }else if (month.equals("05")){
+            return arr[4];
+        }else if (month.equals("06")){
+            return arr[5];
+        }else if (month.equals("07")){
+            return arr[6];
+        }else if (month.equals("08")){
+            return arr[7];
+        }else if (month.equals("09")){
+            return arr[8];
+        }else if (month.equals("10")){
+            return arr[9];
+        }else if (month.equals("11")){
+            return arr[10];
+        }else{
+            return arr[11];
+        }
+    }
+
+    @Override
+    public void onRestart() {  // After a pause OR at startup
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
     }
 
     public void slide_menu() {
@@ -149,7 +188,7 @@ public class Shabad extends SlidingListActivity {
 
         sggs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                constant.sggsMethod(parent, view, position, id, Shabad.this);
+                constant.sggsMethod(parent, view, position, id, Bookmark.this);
             }
         });
 
@@ -160,18 +199,8 @@ public class Shabad extends SlidingListActivity {
         general.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 toggle();
-                constant.generalMethod(parent, view, position, id, Shabad.this);
+                constant.generalMethod(parent, view, position, id, Bookmark.this);
             }
         });
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-
-        savedInstanceState.putStringArrayList(SHABAD_LIST, ShabadActivity.arr);
-        savedInstanceState.putStringArrayList(SHABAD_ARR, shabad_arr);
-        savedInstanceState.putIntegerArrayList(SHABAD_ANG, shabad_ang);
-
     }
 }
