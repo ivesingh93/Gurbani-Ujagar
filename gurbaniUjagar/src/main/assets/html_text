@@ -9,7 +9,7 @@
    <style type="text/css">
                           @font-face {
                     font-family: MyFont;
-                    src: url('file:///android_asset/fonts/GURAKHAR.TTF')
+                    src: url('file:///android_asset/fonts/anmollipinumbers.ttf')
                }
                body {
                     font-family: MyFont;
