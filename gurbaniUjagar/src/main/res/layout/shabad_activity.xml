@@ -383,38 +383,15 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <EditText
-        android:id="@+id/shabad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="68dp"
-        android:layout_weight="1"
-        android:ems="10"
-        android:imeOptions="actionSearch"
-        android:inputType="text" >
-
-        <requestFocus />
-    </EditText>
-
-    <ImageButton
-        android:id="@+id/back_space"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/search"
-        android:layout_weight="1"
-        android:background="@null"
-        android:src="@drawable/back_space"
-        android:text="Search" />
-
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/relativeLayout1"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/search"
-        android:orientation="vertical" >
+
+        android:orientation="vertical"
+        android:layout_below="@+id/linearLayout4">
 
         <TextView
             android:id="@+id/textView1"
@@ -457,16 +434,55 @@
         </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/search"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/shabad"
-        android:layout_alignParentRight="true"
+        android:id="@+id/linearLayout4"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="14dp"
-        android:layout_toRightOf="@+id/shabad"
-        android:layout_weight="1"
-        android:text="Search" />
+        android:layout_centerHorizontal="true">
+
+        <EditText
+            android:id="@+id/shabad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="6"
+            android:imeOptions="actionSearch"
+            android:inputType="text" >
+
+            <requestFocus />
+        </EditText>
+
+        <Button
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/shabad"
+            android:layout_alignEnd="@+id/shabad"
+            android:textSize="15sp"/>
+
+        <Button
+            android:id="@+id/clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/back"
+            android:layout_toStartOf="@+id/back"
+            android:textSize="15sp"/>
+
+        <Button
+            android:id="@+id/search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/shabad"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/shabad"
+            android:text="Search"
+            android:textSize="15sp"/>
+    </LinearLayout>
 
 </RelativeLayout>
