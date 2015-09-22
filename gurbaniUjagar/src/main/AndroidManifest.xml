@@ -3,21 +3,16 @@
     package="gurbani.ujagar"
     android:hardwareAccelerated="true"
     android:installLocation="preferExternal"
-    android:versionCode="42"
-    android:versionName="9.0" >
+    android:versionCode="53"
+    android:versionName="10.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="21" />
 
+
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -36,103 +31,39 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="gurbani.ujagar.Inspiration"
+            android:name="Inspiration"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="gurbani.ujagar.GurbaniOnly"
+            android:name="ShabadActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="gurbani.ujagar.ManmohanSingh"
+            android:name="Shabad"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.google.ads.AdActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
-        <activity
-            android:name="gurbani.ujagar.SahibSingh"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:name="RaagIndex"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="gurbani.ujagar.JapjiSahib"
+            android:name="AuthorIndex"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="gurbani.ujagar.JaapSahib"
+            android:name="Feedback"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="gurbani.ujagar.TavParsad"
+            android:name=".Gurbani"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="gurbani.ujagar.ChaupaiSahib"
+            android:name="Bookmark"
             android:screenOrientation="portrait" >
         </activity>
-        <activity
-            android:name="gurbani.ujagar.RehraasSahib"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="gurbani.ujagar.AnandSahib"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="gurbani.ujagar.SukhmaniSahib"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="gurbani.ujagar.KirtanSohila"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="gurbani.ujagar.AsaDeeVaar"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="gurbani.ujagar.Mahalla9"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="gurbani.ujagar.Settings"
-            android:label="Settings"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" >
-        </activity>
-        <activity
-            android:name="gurbani.ujagar.ShabadActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="gurbani.ujagar.Shabad"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="gurbani.ujagar.ShabadView"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="gurbani.ujagar.RaagIndex"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="gurbani.ujagar.AuthorIndex"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="gurbani.ujagar.Laavan"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="gurbani.ujagar.Feedback"
-            android:screenOrientation="portrait" >
-        </activity>
-         <activity
-            android:name="gurbani.ujagar.SantSingh"
-            android:screenOrientation="portrait" >
-        </activity>
+
+
     </application>
 
 </manifest>
