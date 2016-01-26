@@ -12,3 +12,8 @@ THINGS TO BE FIXED:
 3. DONE - Shabad search list returns null and throws exception.
 4. DONE - Ang does not exist when search button is clicked. ConstantsMethods.ang returns 0.
 5. When the page is reopened after the activity is destroyed, it doesn't save the translation/teeka that is selected before the activity is destroyed.
+
+
+Changing App Design:
+1. User can view Guru Granth Sahib in Different Translations, can view nitnem and other banis.
+2.

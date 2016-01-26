@@ -1,6 +1,9 @@
 package gurbani.ujagar;
 
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -11,12 +14,13 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +47,10 @@ public class ShabadActivity extends SlidingActivity {
     static int line_num = 0;
 	SharedPreferences sp;
 	SharedPreferences.Editor spe;
-
+	AlertDialog levelDialog;
+	RelativeLayout relativeLayout1;
+	boolean english_keyboard;
+	Typeface face;
 	public void onBackPressed() {
 		try{
 			Class ourClass = Class.forName("gurbani.ujagar.MainPage");
@@ -63,7 +70,6 @@ public class ShabadActivity extends SlidingActivity {
 
 		//this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.shabad_activity);
-
 
 		sp = PreferenceManager.getDefaultSharedPreferences(this);
 		spe = sp.edit();
@@ -96,11 +102,30 @@ public class ShabadActivity extends SlidingActivity {
 			}
 		});
 
-		Typeface face = Typeface.createFromAsset(getAssets(),"fonts/anmollipinumbers.ttf");
+		face = Typeface.createFromAsset(getAssets(),"fonts/anmollipinumbers.ttf");
 		shabad.setTypeface(face);
 		text_shabad.setTypeface(face);
-		keyword.setTypeface(face);
+
 		shabad.setInputType(InputType.TYPE_NULL);
+
+		relativeLayout1 = (RelativeLayout)findViewById(R.id.relativeLayout1);
+		english_keyboard = sp.getBoolean("english_keyboard", false);
+		if (english_keyboard){
+			relativeLayout1.setVisibility(View.INVISIBLE);
+			shabad.setInputType(InputType.TYPE_CLASS_TEXT);
+
+			shabad.setTypeface(null, Typeface.NORMAL);
+			keyword.setTypeface(null, Typeface.NORMAL);
+			keyword.setText("mmn, mmna, or mmnap");
+		}else {
+			relativeLayout1.setVisibility(View.VISIBLE);
+			shabad.setInputType(InputType.TYPE_NULL);
+
+			shabad.setTypeface(face);
+			keyword.setTypeface(face);
+			keyword.setText("mmn, mmnA, Xw mmnAp");
+		}
+
 		Button Button07 = (Button) findViewById(R.id.Button07);
 		Button Button06 = (Button) findViewById(R.id.Button06);
 		Button Button05 = (Button) findViewById(R.id.Button05);
@@ -193,7 +218,12 @@ public class ShabadActivity extends SlidingActivity {
 				if (shabad.getText().toString().matches("")) {
 					Toast.makeText(getApplicationContext(), "Textfield cannot be empty.", Toast.LENGTH_SHORT).show();
 				} else {
-					perform_search();
+					if (english_keyboard){
+						perform_english_search();
+					}else{
+						perform_punjabi_search();
+					}
+
 				}
 			}
 		});
@@ -219,6 +249,55 @@ public class ShabadActivity extends SlidingActivity {
 			}
 		});
 
+		Button settings = (Button)findViewById(R.id.settings);
+
+
+		settings.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+
+				// Strings to Show In Dialog with Radio Buttons
+				final CharSequence[] items = {"English Keyboard","Punjabi Keyboard"};
+
+				// Creating and Building the Dialog
+				AlertDialog.Builder builder = new AlertDialog.Builder(ShabadActivity.this);
+				builder.setTitle("Select Keyboard");
+				builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int item) {
+						switch(item) {
+							case 0:
+								relativeLayout1.setVisibility(View.INVISIBLE);
+								shabad.setInputType(InputType.TYPE_CLASS_TEXT);
+								english_keyboard = true;
+								shabad.setText("");
+								shabad.setTypeface(null, Typeface.NORMAL);
+								keyword.setTypeface(null, Typeface.NORMAL);
+								keyword.setText("mmn, mmna, or mmnap");
+								break;
+							case 1:
+								relativeLayout1.setVisibility(View.VISIBLE);
+								shabad.setInputType(InputType.TYPE_NULL);
+								english_keyboard = false;
+								shabad.setText("");
+								shabad.setTypeface(face);
+								keyword.setTypeface(face);
+								keyword.setText("mmn, mmnA, Xw mmnAp");
+								break;
+						}
+						InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+						inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+						spe.putBoolean("english_keyboard", english_keyboard);
+						spe.commit();
+						levelDialog.dismiss();
+					}
+				});
+				levelDialog = builder.create();
+				levelDialog.show();
+
+
+			}
+		});
 
 	}
 
@@ -270,7 +349,137 @@ public class ShabadActivity extends SlidingActivity {
 
 	}
 
-	private void perform_search() {
+	private void perform_english_search() {
+		shabad.setText(shabad.getText().toString().replace("i", "e"));
+
+		search_word_arr = shabad.getText().toString().toLowerCase().toCharArray();
+		for (int i = 1; i <=1430; i++){
+			try {
+				BufferedReader reader2 = new BufferedReader(new InputStreamReader(getAssets().open("guru_granth/gurmukhi/" +i)));
+				String mLine = reader2.readLine(), mLine2;
+
+				while (mLine != null) {
+					line_num++;
+					mLine2 = mLine;
+
+					mLine = mLine.replace(" i", " ");
+					if (mLine.charAt(0) == 'i'){
+						mLine = mLine.substring(1,mLine.length());
+					}
+
+//					StringBuilder build_line = new StringBuilder(mLine);
+//					for(int k = 0; k < mLine.length(); k++){
+//						if(build_line.charAt(k) == 'E'){
+//							build_line.setCharAt(k, 'o');
+//						}
+//						if(build_line.charAt(k) == 'a'){
+//							build_line.setCharAt(k, 'u');
+//						}
+//						if(build_line.charAt(k) == 'P'){
+//							build_line.setCharAt(k, 'f');
+//						}
+//						if(build_line.charAt(k) == 'q'){
+//							build_line.setCharAt(k, 't');
+//						}
+//						if(build_line.charAt(k) == 'Q'){
+//							build_line.setCharAt(k, 't');
+//						}
+//						if(build_line.charAt(k) == 'X'){
+//							build_line.setCharAt(k, 'y');
+//						}
+//						if(build_line.charAt(k) == 'f'){
+//							build_line.setCharAt(k, 'd');
+//						}
+//						if(build_line.charAt(k) == 'F'){
+//							build_line.setCharAt(k, 'd');
+//						}
+//						if(build_line.charAt(k) == '|'){
+//							build_line.setCharAt(k, 'n');
+//						}
+//						if(build_line.charAt(k) == '\\'){
+//							build_line.setCharAt(k, 'n');
+//						}
+//					}
+
+					mLine = mLine.replace("E", "o").replace("a", "u").replace("P", "f").replace("q", "t")
+							.replace("Q", "t").replace("X", "y").replace("f", "d").replace("F", "d")
+							.replace("|", "n").replace("\\", "n").toLowerCase();
+
+					if (search_word_arr.length == 5){
+
+						if((mLine.charAt(0) == search_word_arr[0]) && (mLine.charAt(mLine.indexOf(' ')+1) == search_word_arr[1])
+								&& (mLine.charAt(mLine.indexOf(' ', (mLine.indexOf(' ') + 1)) + 1) == search_word_arr[2])
+								&& (mLine.charAt(mLine.indexOf(' ', (mLine.indexOf(' ', (mLine.indexOf(' ') + 1)) + 1)) + 1) == search_word_arr[3])
+								&& (mLine.charAt(mLine.indexOf(' ', (mLine.indexOf(' ', (mLine.indexOf(' ', mLine.indexOf(' ') + 1) + 1)) + 1)) + 1) == search_word_arr[4])
+
+								){
+							arr.add(mLine2);
+							list_array.put(mLine2, i);
+							line_num_arr.put(mLine2, line_num);
+						}
+					}else if (search_word_arr.length == 4){
+						if((mLine.charAt(0) == search_word_arr[0]) && (mLine.charAt(mLine.indexOf(' ')+1) == search_word_arr[1])
+								&& (mLine.charAt(mLine.indexOf(' ', (mLine.indexOf(' ') + 1)) + 1) == search_word_arr[2])
+								&& (mLine.charAt(mLine.indexOf(' ', (mLine.indexOf(' ', (mLine.indexOf(' ') + 1)) + 1)) + 1) == search_word_arr[3])){
+							arr.add(mLine2);
+							list_array.put(mLine2, i);
+							line_num_arr.put(mLine2, line_num);
+						}
+					}else if (search_word_arr.length == 3){
+						if((mLine.charAt(0) == search_word_arr[0]) && (mLine.charAt(mLine.indexOf(' ')+1) == search_word_arr[1])
+								&& (mLine.charAt(mLine.indexOf(' ', (mLine.indexOf(' ') + 1)) + 1) == search_word_arr[2])){
+							arr.add(mLine2);
+							list_array.put(mLine2, i);
+							line_num_arr.put(mLine2, line_num);
+						}
+					}else if (search_word_arr.length == 2){
+						if((mLine.charAt(0) == search_word_arr[0]) && (mLine.charAt(mLine.indexOf(' ')+1) == search_word_arr[1])){
+							arr.add(mLine2);
+							list_array.put(mLine2, i);
+							line_num_arr.put(mLine2, line_num);
+						}
+					}else if(search_word_arr.length == 1){
+						if(mLine.charAt(0) == search_word_arr[0]){
+							arr.add(mLine2);
+							list_array.put(mLine2, i);
+							line_num_arr.put(mLine2, line_num);
+						}
+					}
+					mLine = reader2.readLine();
+				}
+				line_num = 0;
+			} catch (IOException e) {
+
+			}
+		}
+
+		spe.putInt("arr_size", arr.size());
+
+		for(int i=0; i<arr.size(); i++) {
+			spe.remove("arr" + i);
+			spe.putString("arr" + i, arr.get(i));
+		}
+
+		if(arr.size() !=0){
+
+			Toast.makeText(getApplicationContext(), arr.size()+" Result(s)", Toast.LENGTH_LONG).show();
+
+			try{
+				Class ourClass = Class.forName("gurbani.ujagar.Shabad");
+				Intent ourIntent = new Intent(ShabadActivity.this, ourClass);
+				startActivity(ourIntent);
+
+			}catch(ClassNotFoundException e){
+				e.printStackTrace();
+
+			}
+
+		}else{
+			Toast.makeText(getApplicationContext(), "Sorry, no results.", Toast.LENGTH_LONG).show();
+		}
+	}
+
+	private void perform_punjabi_search() {
 		search_word_arr = shabad.getText().toString().toCharArray();
 		for (int i = 1; i <=1430; i++){   
 			try {
@@ -287,10 +496,10 @@ public class ShabadActivity extends SlidingActivity {
 					}
 
 					if (search_word_arr.length == 5){
-						if((mLine.charAt(0) == search_word_arr[0]) && (mLine.charAt(mLine.indexOf(' ')+1) == search_word_arr[1])
-								&& (mLine.charAt(mLine.indexOf(' ', (mLine.indexOf(' ') + 1)) + 1) == search_word_arr[2])
-								&& (mLine.charAt(mLine.indexOf(' ', (mLine.indexOf(' ', (mLine.indexOf(' ') + 1)) + 1)) + 1) == search_word_arr[3])
-								&& (mLine.charAt(mLine.indexOf(' ', (mLine.indexOf(' ', (mLine.indexOf(' ', mLine.indexOf(' ') + 1) + 1)) + 1)) + 1) == search_word_arr[4])
+						if((mLine.charAt(0) == search_word_arr[0]) && (mLine.charAt(mLine.indexOf(" ")+1) == search_word_arr[1])
+								&& (mLine.charAt(mLine.indexOf(" ", (mLine.indexOf(" ") + 1)) + 1) == search_word_arr[2])
+								&& (mLine.charAt(mLine.indexOf(" ", (mLine.indexOf(" ", (mLine.indexOf(" ") + 1)) + 1)) + 1) == search_word_arr[3])
+								&& (mLine.charAt(mLine.indexOf(" ", (mLine.indexOf(" ", (mLine.indexOf(" ", mLine.indexOf(" ") + 1) + 1)) + 1)) + 1) == search_word_arr[4])
 
 								){		
 							arr.add(mLine2);
@@ -298,16 +507,16 @@ public class ShabadActivity extends SlidingActivity {
                             line_num_arr.put(mLine2, line_num);
 						}
 					}else if (search_word_arr.length == 4){
-						if((mLine.charAt(0) == search_word_arr[0]) && (mLine.charAt(mLine.indexOf(' ')+1) == search_word_arr[1])
-								&& (mLine.charAt(mLine.indexOf(' ', (mLine.indexOf(' ') + 1)) + 1) == search_word_arr[2])
-								&& (mLine.charAt(mLine.indexOf(' ', (mLine.indexOf(' ', (mLine.indexOf(' ') + 1)) + 1)) + 1) == search_word_arr[3])){		
+						if((mLine.charAt(0) == search_word_arr[0]) && (mLine.charAt(mLine.indexOf(" ")+1) == search_word_arr[1])
+								&& (mLine.charAt(mLine.indexOf(" ", (mLine.indexOf(" ") + 1)) + 1) == search_word_arr[2])
+								&& (mLine.charAt(mLine.indexOf(" ", (mLine.indexOf(" ", (mLine.indexOf(" ") + 1)) + 1)) + 1) == search_word_arr[3])){
 							arr.add(mLine2);
 							list_array.put(mLine2, i);
                             line_num_arr.put(mLine2, line_num);
 						}
 					}else if (search_word_arr.length == 3){
-						if((mLine.charAt(0) == search_word_arr[0]) && (mLine.charAt(mLine.indexOf(' ')+1) == search_word_arr[1])
-								&& (mLine.charAt(mLine.indexOf(' ', (mLine.indexOf(' ') + 1)) + 1) == search_word_arr[2])){		
+						if((mLine.charAt(0) == search_word_arr[0]) && (mLine.charAt(mLine.indexOf(" ")+1) == search_word_arr[1])
+								&& (mLine.charAt(mLine.indexOf(" ", (mLine.indexOf(" ") + 1)) + 1) == search_word_arr[2])){
 							arr.add(mLine2);
 							list_array.put(mLine2, i);
                             line_num_arr.put(mLine2, line_num);

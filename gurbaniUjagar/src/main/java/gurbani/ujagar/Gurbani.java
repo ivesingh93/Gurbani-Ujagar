@@ -836,7 +836,7 @@ public class Gurbani extends SlidingActivity implements Animation.AnimationListe
         animSlideIn.setAnimationListener(this);
         animSlideOut.setAnimationListener(this);
 
-        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/anmollipinumbers.ttf");
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/gurblipi_.ttf");
         gurbani.setTypeface(face);
         textLayout.setVisibility(View.GONE);
 

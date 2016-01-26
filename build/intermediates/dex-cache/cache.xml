@@ -2,46 +2,46 @@
 <items version="2" >
 
     <item
-        jar="/Users/Waheguru/Library/Android/sdk/extras/android/m2repository/com/android/support/support-v4/18.0.0/support-v4-18.0.0.jar"
+        jar="/Users/ivesingh/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/build/intermediates/exploded-aar/GurbaniUjagar/slidingMenu/unspecified/jars/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="44ec51e9d395a47aab135e5e1b556c0007442156">
-        <dex dex="/Users/Waheguru/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/build/intermediates/pre-dexed/debug/support-v4-18.0.0-7e16faf78dfdd87607c9bfba343e60dd1a0fe9f4.jar" />
+        sha1="ee3c5fd4e1062168bdd2e2c681fe1b759966fc18">
+        <dex dex="/Users/ivesingh/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/build/intermediates/pre-dexed/debug/classes-b9e2cc3ade959d082d070abd1a586f0d91fb09df.jar" />
     </item>
     <item
-        jar="/Users/Waheguru/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/libs/icshqtcqgrphsd.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="a7fa59e2d28ea901a482b3118b8928a69e4860ba">
-        <dex dex="/Users/Waheguru/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/build/intermediates/pre-dexed/debug/icshqtcqgrphsd-6b9af9a53638b59684d916e4a408a26979c34e31.jar" />
-    </item>
-    <item
-        jar="/Users/Waheguru/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/libs/nineoldandroids-2.4.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="59f19e43354d32de831379c23ce03bb259a4c2b7">
-        <dex dex="/Users/Waheguru/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/build/intermediates/pre-dexed/debug/nineoldandroids-2.4.0-88f992b7e76a45662ac78013e79ebb4348011fc4.jar" />
-    </item>
-    <item
-        jar="/Users/Waheguru/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/build/intermediates/exploded-aar/GurbaniUjagar/slidingMenu/unspecified/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="f5375d686bb3b77cb14cff65255f97fa8f4c47b6">
-        <dex dex="/Users/Waheguru/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/build/intermediates/pre-dexed/debug/classes-4726f38cb860e2904fcd19f013984b1a2bdead93.jar" />
-    </item>
-    <item
-        jar="/Users/Waheguru/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/libs/library-1.2.1.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="4075e2f465ca76b2fda728bac647eb18eca5500b">
-        <dex dex="/Users/Waheguru/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/build/intermediates/pre-dexed/debug/library-1.2.1-ef524f0851b9eabbd423c1945ae964523b565a3b.jar" />
-    </item>
-    <item
-        jar="/Users/Waheguru/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/libs/GoogleAdMobAdsSdk-6.4.1.jar"
+        jar="/Users/ivesingh/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/libs/GoogleAdMobAdsSdk-6.4.1.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="6262c554ef5744538d526465aa73704810705734">
-        <dex dex="/Users/Waheguru/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/build/intermediates/pre-dexed/debug/GoogleAdMobAdsSdk-6.4.1-77fc69dbda48830830e5c759d2b7f740e53a258b.jar" />
+        <dex dex="/Users/ivesingh/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/build/intermediates/pre-dexed/debug/GoogleAdMobAdsSdk-6.4.1-a80cb937de27f33fa64a0eec723c52e7bcb7a311.jar" />
+    </item>
+    <item
+        jar="/Users/ivesingh/Library/Android/sdk/extras/android/m2repository/com/android/support/support-v4/18.0.0/support-v4-18.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="44ec51e9d395a47aab135e5e1b556c0007442156">
+        <dex dex="/Users/ivesingh/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/build/intermediates/pre-dexed/debug/support-v4-18.0.0-987a8e39d69fae0a27d57be8a5d2bf7b04d4c367.jar" />
+    </item>
+    <item
+        jar="/Users/ivesingh/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/libs/icshqtcqgrphsd.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a7fa59e2d28ea901a482b3118b8928a69e4860ba">
+        <dex dex="/Users/ivesingh/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/build/intermediates/pre-dexed/debug/icshqtcqgrphsd-45d190908c779493a8ec807e37592a18c81b400a.jar" />
+    </item>
+    <item
+        jar="/Users/ivesingh/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/libs/nineoldandroids-2.4.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="59f19e43354d32de831379c23ce03bb259a4c2b7">
+        <dex dex="/Users/ivesingh/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/build/intermediates/pre-dexed/debug/nineoldandroids-2.4.0-3f74fa0d5f83f47a1737a0350eaf7d4247a09ba0.jar" />
+    </item>
+    <item
+        jar="/Users/ivesingh/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/libs/library-1.2.1.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4075e2f465ca76b2fda728bac647eb18eca5500b">
+        <dex dex="/Users/ivesingh/Documents/AndroidStudioProjects/GurbaniUjagar/gurbaniUjagar/build/intermediates/pre-dexed/debug/library-1.2.1-f174589277b1e21f5c213431eb2f0b71fb069254.jar" />
     </item>
 
 </items>
